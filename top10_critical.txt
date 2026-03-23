@@ -1,0 +1,10 @@
+      7 server1
+      7 Jul
+      7 15
+      5 kernel
+      5 error
+      2 user
+      2 sda1
+      2 from
+      2 for
+      2 exceeded
