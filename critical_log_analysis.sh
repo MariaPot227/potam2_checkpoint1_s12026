@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # -i = case-insensitive, -E = extended regex for alternation
+
 #Filtering lines by extracting all the issues and errors from the log
+#grep command searches for patterns in files and displays matching lines
 #-i will ignore case sensitivity
 #-E enables extended regex
-filtered_lines=$(grep -iE "ERROR|CRITICAL|FATAL" sys_log.txt)
+filtered_lines=$(grep -iE "ERROR|CRITICAL|FATAL" sys_log.txt) 
 
 #split into one word per line
 #Replacing spaces with a new line, easier to read
