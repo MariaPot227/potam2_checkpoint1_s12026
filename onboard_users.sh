@@ -14,6 +14,11 @@ log() {
 
 #splits the csv file at each comma , into three variables, username, groupname and shell
 while IFS=',' read -r username groupname shell; do
+# Skip header row
+if [[ "$username" == "username" ]]; then
+    continue
+fi
+
 #one user has multilple groups, this splits it into an array.
 #-ra will read the raw text and split the input into an array
 	IFS='/' read -ra grp_array <<< "$groupname"
@@ -113,8 +118,7 @@ while IFS=',' read -r username groupname shell; do
     	sudo chmod 750 "$proj_dir"
     	log "Set permissions 750 on $proj_dir"
 	
-	done < <(tail -n +2 users.csv)
-
+	done
 
 
 
