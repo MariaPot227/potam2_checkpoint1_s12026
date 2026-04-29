@@ -113,7 +113,8 @@ while IFS=',' read -r username groupname shell; do
     	sudo chmod 750 "$proj_dir"
     	log "Set permissions 750 on $proj_dir"
 	
-	done
+	done < <(tail -n +2 users.csv)
+
 
 
 
