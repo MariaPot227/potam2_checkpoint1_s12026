@@ -14,10 +14,10 @@ log() {
 
 #splits the csv file at each comma , into three variables, username, groupname and shell
 while IFS=',' read -r username groupname shell; do
-
     if [[ "$username" == "username" ]]; then
         continue
     fi
+
 #one user has multilple groups, this splits it into an array.
 #-ra will read the raw text and split the input into an array
 	IFS='/' read -ra grp_array <<< "$groupname"
