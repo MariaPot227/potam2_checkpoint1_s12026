@@ -14,13 +14,18 @@ log() {
 
 #splits the csv file at each comma , into three variables, username, groupname and shell
 while IFS=',' read -r username groupname shell; do
+
+    if [[ "$username" == "username" ]]; then
+        continue
+    fi
 #one user has multilple groups, this splits it into an array.
 #-ra will read the raw text and split the input into an array
 	IFS='/' read -ra grp_array <<< "$groupname"
 	#VALIDATION Requirement 7
 	#Validates username by:
 	#starts with lower case letters, rest only allow lowercase, digits, _ or -, max 32 length
-	#CONTINUE skips the rest of the current loop iteration and moves on, meaning if an error occurs, it moves onto the next line of the csv
+	#CONTINUE skips the rest of the current loop iteration and moves on, 
+	#meaning if an error occurs, it moves onto the next line of the csv
 	if ! [[ "$username" =~ ^[a-z][a-z0-9_-]{0,31}$ ]]; then
         	log "ERROR: Invalid username '$username' -- skipping"
         	continue
@@ -91,7 +96,7 @@ while IFS=',' read -r username groupname shell; do
 		#only this user will have access to their own home directory, no one else
 		#This makes it secure and private 
     	sudo chown "$username":"$username" "$home_dir"
-    	log "Set ownership of $home_dir to $username"
+    	log "Set ownership of home directory $home_dir to $username"
 
     	sudo chmod 700 "$home_dir"
     	log "Set permissions 700 on $home_dir."
@@ -108,7 +113,7 @@ while IFS=',' read -r username groupname shell; do
 		#Sets ownership to user and its group
 		#this is for projects and collaborative work, the whole group can access this directory
 		#Applying permissions of 750, meaning the user has full access, and the group can only read/execute/
-    	log "Set ownership of $proj_dir to $username:$grp"
+    	log "Set ownership of project directory $proj_dir to $username:$grp"
 
     	sudo chmod 750 "$proj_dir"
     	log "Set permissions 750 on $proj_dir"
@@ -120,8 +125,3 @@ while IFS=',' read -r username groupname shell; do
 	echo "_____________________________________"
 	log "______________________________________"
 done < users.csv
-
-
-
-
-
